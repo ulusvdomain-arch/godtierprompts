@@ -3,7 +3,7 @@
     let author_id = JSON.parse(localStorage.getItem('sb-naxnmptbuycolotkwvsz-auth-token'))['user']['id'];
     let api_key = 'sb_publishable_4koI0XhJp65TObrB07RRCQ_HcZxOzcj';
     if (access_token) {
-        const name_change_url = 'https://naxnmptbuycolotkwvsz.supabase.co/rest/v1/profiles?id=eq.7ac9d47d-8469-4346-98be-8ee3944b7618';
+        const name_change_url = 'https://naxnmptbuycolotkwvsz.supabase.co/rest/v1/profiles?id=eq.'+author_id;
         fetch(name_change_url, {
             method: 'PATCH',
             headers: {
