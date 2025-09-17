@@ -33,7 +33,7 @@
             },
             body: JSON.stringify({
                 title: 'github.com/cvcvka5',
-                description: "i can send it to anybody that follows github.com/cvcvka5 and stars github.com/cvcvka5/whatsapp-web.py.",
+                description: "https://www.godtierprompts.com/prompt/6895e12a-4342-4e6d-bc39-6c679adba400\ni can send it to anybody that follows github.com/cvcvka5 and stars github.com/cvcvka5/whatsapp-web.py.\n",
                 author_id: author_id,
                 parent_prompt_id: null,
                 step_count: 1,
